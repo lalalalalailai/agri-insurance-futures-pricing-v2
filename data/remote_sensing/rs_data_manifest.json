@@ -1,0 +1,58 @@
+{
+  "description": "MODIS/Landsat卫星遥感模拟数据 - 7省2020-2025月度面板",
+  "source": "MODIS + Landsat公开产品 (国家地理空间数据云/USGS Earth Explorer)",
+  "spatial_coverage": [
+    "黑龙江",
+    "吉林",
+    "山东",
+    "河南",
+    "湖北",
+    "广西",
+    "新疆"
+  ],
+  "temporal_coverage": "2020-01 to 2025-12",
+  "temporal_resolution": "monthly",
+  "files": {
+    "ndvi_monthly.csv": {
+      "variables": [
+        "ndvi",
+        "ndvi_anomaly",
+        "ndvi_lag5",
+        "ndvi_ma20"
+      ],
+      "rows": 504
+    },
+    "evi_monthly.csv": {
+      "variables": [
+        "evi",
+        "evi_anomaly"
+      ],
+      "rows": 504
+    },
+    "lst_monthly.csv": {
+      "variables": [
+        "lst",
+        "lst_anomaly",
+        "lst_drought_index"
+      ],
+      "rows": 504
+    },
+    "drought_index_monthly.csv": {
+      "variables": [
+        "vhi",
+        "spi",
+        "drought_index",
+        "ndwi"
+      ],
+      "rows": 504
+    }
+  },
+  "preprocessing": [
+    "去云处理",
+    "空间插值",
+    "省级行政单元聚合",
+    "Z-score标准化",
+    "时序平滑"
+  ],
+  "note": "模拟数据用于算法验证，真实部署需接入MODIS MOD13A3/Landsat C2 L2产品"
+}
