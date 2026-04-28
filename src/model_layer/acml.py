@@ -162,9 +162,14 @@ class ACML:
         if not self.is_fitted or self.g_model is None:
             return {}
         imp = self.g_model.feature_importances_
-        names = self.feature_names
-        sorted_idx = np.argsort(imp)[::-1]
-        return {names[i]: round(float(imp[i]), 4) for i in sorted_idx if imp[i] > 0}
+        model_features = self.g_model.get_booster().feature_names
+        if model_features is None:
+            model_features = self.feature_names[:len(imp)]
+        result = {}
+        for i, name in enumerate(model_features):
+            if i < len(imp) and imp[i] > 0:
+                result[name] = round(float(imp[i]), 4)
+        return result
 
     def neyman_orthogonality_test(self, data: pd.DataFrame, n_perturb: int = 100,
                                    eps: float = 0.01) -> dict:

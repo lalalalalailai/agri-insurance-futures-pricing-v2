@@ -146,7 +146,10 @@ def coverage_chart(coverage_history, alpha_history, target=0.9):
     fig.update_layout(
         title="覆盖率与自适应置信水平变化",
         height=400, template="agri_green_light",
-        yaxis2=dict(overlaying="y", side="right", title="α值",
-                    titlefont=dict(color="#475569"), tickfont=dict(color="#475569")),
+        yaxis2=dict(
+            overlaying="y", side="right",
+            title=dict(text="α值", font=dict(color="#475569")),
+            tickfont=dict(color="#475569"),
+        ),
     )
     return fig
