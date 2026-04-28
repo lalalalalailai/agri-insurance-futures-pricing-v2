@@ -113,8 +113,8 @@ THEME_CSS = """
 
     section[data-testid="stSidebar"] .stRadio > div > label {
         color: var(--sidebar-text) !important;
-        font-size: 14px;
-        padding: 6px 12px;
+        font-size: 16px;
+        padding: 8px 14px;
         border-radius: 6px;
         transition: all 0.2s;
     }
@@ -132,8 +132,8 @@ THEME_CSS = """
 
     section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
     section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div {
-        color: var(--sidebar-muted) !important;
-        font-size: 12px;
+        color: #CBD5E1 !important;
+        font-size: 13px;
     }
 
     section[data-testid="stSidebar"] .stButton > button {

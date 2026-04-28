@@ -137,9 +137,9 @@ class FeatureEngineer:
             "surface_pressure", "solar_radiation",
             "ndvi", "evi", "lst", "drought_index",
             "cpi", "ppi", "m2", "gdp", "pmi",
-            "month_sin", "month_cos", "quarter_sin", "quarter_cos",
-            "extreme_temp_index", "extreme_precip_index",
-            "yield_proxy",
+            "import_value", "export_value", "retail_sales",
+            "fixed_investment", "industrial_output",
+            "exchange_rate", "interest_rate",
         ]
 
     def get_feature_groups(self) -> dict:
@@ -148,10 +148,10 @@ class FeatureEngineer:
             "weather": ["temperature", "precipitation", "humidity", "wind_speed",
                         "surface_pressure", "solar_radiation"],
             "remote_sensing": ["ndvi", "evi", "lst", "drought_index"],
-            "macro": ["cpi", "ppi", "m2", "gdp", "pmi"],
-            "time": ["month_sin", "month_cos", "quarter_sin", "quarter_cos"],
-            "extreme": ["extreme_temp_index", "extreme_precip_index"],
-            "yield": ["yield_proxy"],
+            "macro": ["cpi", "ppi", "m2", "gdp", "pmi",
+                      "import_value", "export_value", "retail_sales",
+                      "fixed_investment", "industrial_output",
+                      "exchange_rate", "interest_rate"],
         }
 
     def get_data_source_summary(self) -> dict:

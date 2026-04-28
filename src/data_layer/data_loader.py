@@ -6,6 +6,7 @@ from config import (
     FUTURES_DIR, WEATHER_DIR, RS_DIR, DATA_DIR,
     FUTURES_VARIETIES, VARIETY_REGION_MAP, WEATHER_REGIONS,
     RS_PROVINCES, CACHE_DATA_DIR, CACHE_TTL_DATA,
+    DATA_DATE_START, DATA_DATE_END,
 )
 
 
@@ -18,6 +19,7 @@ class FuturesDataLoader:
             raise FileNotFoundError(f"期货数据文件不存在: {filepath}")
         df = pd.read_csv(filepath, parse_dates=["date"])
         df = df.sort_values("date").reset_index(drop=True)
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
         df["variety_code"] = code
         df["variety_name"] = name
         return df
@@ -48,6 +50,7 @@ class WeatherDataLoader:
             raise FileNotFoundError(f"气象数据文件不存在: {filepath}")
         df = pd.read_csv(filepath, parse_dates=["date"])
         df = df.sort_values("date").reset_index(drop=True)
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
         return df
 
     def load_all(self) -> dict:
@@ -72,25 +75,33 @@ class RemoteSensingLoader:
         filepath = os.path.join(RS_DIR, "ndvi_monthly.csv")
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"NDVI数据文件不存在: {filepath}")
-        return pd.read_csv(filepath, parse_dates=["date"])
+        df = pd.read_csv(filepath, parse_dates=["date"])
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
+        return df
 
     def load_evi(self) -> pd.DataFrame:
         filepath = os.path.join(RS_DIR, "evi_monthly.csv")
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"EVI数据文件不存在: {filepath}")
-        return pd.read_csv(filepath, parse_dates=["date"])
+        df = pd.read_csv(filepath, parse_dates=["date"])
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
+        return df
 
     def load_lst(self) -> pd.DataFrame:
         filepath = os.path.join(RS_DIR, "lst_monthly.csv")
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"LST数据文件不存在: {filepath}")
-        return pd.read_csv(filepath, parse_dates=["date"])
+        df = pd.read_csv(filepath, parse_dates=["date"])
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
+        return df
 
     def load_drought(self) -> pd.DataFrame:
         filepath = os.path.join(RS_DIR, "drought_index_monthly.csv")
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"干旱指数数据文件不存在: {filepath}")
-        return pd.read_csv(filepath, parse_dates=["date"])
+        df = pd.read_csv(filepath, parse_dates=["date"])
+        df = df[(df["date"] >= DATA_DATE_START) & (df["date"] <= DATA_DATE_END)].copy()
+        return df
 
     def load_all(self) -> dict:
         result = {}
@@ -170,6 +181,7 @@ class DataLoader:
             panel = panel.drop(columns=["year", "month"])
 
         panel = panel.sort_values("date").reset_index(drop=True)
+        panel = panel[(panel["date"] >= DATA_DATE_START) & (panel["date"] <= DATA_DATE_END)].copy()
         return panel
 
     def get_data_summary(self) -> dict:

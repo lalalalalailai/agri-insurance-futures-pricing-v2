@@ -24,10 +24,10 @@ with st.sidebar:
     selected_page = st.radio("功能导航", page_names, label_visibility="collapsed")
     st.markdown("---")
     st.markdown("""
-    <div style="font-size:12px; color:#4E5969;">
+    <div style="font-size:13px; color:#CBD5E1;">
     基于因果推断的农险期货智能定价模型<br>
     Agri-PC / ACML / CCP 三大原创算法<br>
-    54,432条真实多源数据
+    54,432条真实多源数据(2020.01-2025.12)
     </div>
     """, unsafe_allow_html=True)
 
@@ -78,7 +78,4 @@ elif page_key == "14_extreme_disaster":
     render()
 elif page_key == "15_one_click":
     from src.ui_layer.pages.page_one_click import render
-    render()
-elif page_key == "16_system_admin":
-    from src.ui_layer.pages.page_admin import render
     render()

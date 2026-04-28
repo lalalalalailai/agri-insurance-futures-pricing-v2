@@ -128,17 +128,20 @@ class ReportService:
             except Exception:
                 return f"<unserializable:{type(obj).__name__}>"
 
-        seen = set()
-        def remove_circular(obj):
-            obj_id = id(obj)
-            if obj_id in seen:
-                return "<circular_ref>"
+        def remove_circular(obj, stack=None):
+            if stack is None:
+                stack = set()
             if isinstance(obj, (dict, list)):
-                seen.add(obj_id)
-            if isinstance(obj, dict):
-                return {k: remove_circular(v) for k, v in obj.items()}
-            if isinstance(obj, list):
-                return [remove_circular(v) for v in obj]
+                obj_id = id(obj)
+                if obj_id in stack:
+                    return "<circular_ref>"
+                stack.add(obj_id)
+                if isinstance(obj, dict):
+                    result = {k: remove_circular(v, stack) for k, v in obj.items()}
+                else:
+                    result = [remove_circular(v, stack) for v in obj]
+                stack.discard(obj_id)
+                return result
             return obj
 
         cleaned = remove_circular(results)

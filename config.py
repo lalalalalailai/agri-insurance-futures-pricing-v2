@@ -12,6 +12,10 @@ CACHE_DATA_DIR = os.path.join(CACHE_DIR, "data")
 CACHE_MODELS_DIR = os.path.join(CACHE_DIR, "models")
 CACHE_RESULTS_DIR = os.path.join(CACHE_DIR, "results")
 
+DATA_DATE_START = "2020-01-01"
+DATA_DATE_END = "2025-12-31"
+DATA_DATE_RANGE_DESC = "2020.01-2025.12"
+
 COLORS = {
     "primary": "#165DFF",
     "secondary": "#36CFC9",
@@ -90,9 +94,9 @@ FEATURE_NAMES = [
     "surface_pressure", "solar_radiation",
     "ndvi", "evi", "lst", "drought_index",
     "cpi", "ppi", "m2", "gdp", "pmi",
-    "month_sin", "month_cos", "quarter_sin", "quarter_cos",
-    "extreme_temp_index", "extreme_precip_index",
-    "yield_proxy",
+    "import_value", "export_value", "retail_sales",
+    "fixed_investment", "industrial_output",
+    "exchange_rate", "interest_rate",
 ]
 
 PAGES = [
@@ -111,7 +115,6 @@ PAGES = [
     ("13_sichuan", "四川特色"),
     ("14_extreme_disaster", "极端灾害"),
     ("15_one_click", "一键复现"),
-    ("16_system_admin", "系统管理"),
 ]
 
 CACHE_TTL_DATA = 86400
