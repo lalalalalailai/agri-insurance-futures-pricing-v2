@@ -11,7 +11,6 @@ class FeatureEngineer:
         "retail_sales",
         "fixed_investment", "industrial_output",
         "exchange_rate", "interest_rate",
-        "fiscal_revenue", "fiscal_expenditure",
     ]
 
     MACRO_RECORDS = 840
@@ -80,8 +79,6 @@ class FeatureEngineer:
             "industrial_output": "macro_industrial_output",
             "exchange_rate": "macro_exchange_rate",
             "interest_rate": "macro_interest_rate",
-            "fiscal_revenue": "macro_fiscal_revenue",
-            "fiscal_expenditure": "macro_fiscal_expenditure",
         }
         for dst, src in macro_source_map.items():
             if src in df.columns:
