@@ -12,6 +12,15 @@ from src.model_layer.baselines import (
 
 class ValidationEngine:
 
+    ABLATION_XGB_PARAMS = {
+        "n_estimators": 80, "max_depth": 4, "learning_rate": 0.1,
+        "subsample": 0.8, "colsample_bytree": 0.8, "random_state": 42,
+    }
+    ABLATION_CCP_XGB_PARAMS = {
+        "n_estimators": 60, "max_depth": 3, "learning_rate": 0.1,
+        "subsample": 0.8, "random_state": 42,
+    }
+
     def __init__(self):
         self.results = {}
 
@@ -243,32 +252,58 @@ class ValidationEngine:
         return 0
 
     def _ablate_acml(self, data, feature_cols, ablation_key):
+        light_params = self.ABLATION_XGB_PARAMS
         if ablation_key == "B1_double_orthogonalization":
-            ablated = ACML(risk_lambda=0.0)
-            ablated.n_splits = 2
-            result = ablated.fit(data, feature_cols)
-            return abs(result.get("tau_mean", 0)) if result.get("status") == "success" else 0
+            X = data[feature_cols].copy().fillna(0).replace([np.inf, -np.inf], 0)
+            if "close" not in X.columns:
+                return 0
+            if "extreme_precip_index" in X.columns and "extreme_temp_index" in X.columns:
+                risk = X["extreme_precip_index"] + X["extreme_temp_index"]
+                D = (risk > risk.median()).astype(float).values
+            elif "drought_index" in X.columns:
+                D = (X["drought_index"] > X["drought_index"].median()).astype(float).values
+            else:
+                D = np.zeros(len(X))
+            Y = X["close"].values
+            from sklearn.model_selection import TimeSeriesSplit
+            from xgboost import XGBRegressor
+            tscv = TimeSeriesSplit(n_splits=3)
+            tau_preds = np.zeros(len(X))
+            for train_idx, test_idx in tscv.split(X):
+                X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
+                Y_train, Y_test = Y[train_idx], Y[test_idx]
+                D_test = D[test_idx]
+                g_model = XGBRegressor(**light_params)
+                g_model.fit(X_train, Y_train)
+                g_pred = g_model.predict(X_test)
+                g_res = Y_test - g_pred
+                if np.var(D_test) > 1e-10:
+                    tau_local = np.dot(g_res, D_test) / np.dot(D_test, D_test)
+                    tau_preds[test_idx] = tau_local
+            valid_tau = tau_preds[tau_preds != 0]
+            return abs(np.mean(valid_tau)) if len(valid_tau) > 0 else 0
         elif ablation_key == "B2_risk_regularization":
-            ablated = ACML(risk_lambda=0.0)
+            ablated = ACML(n_splits=5, risk_lambda=0.0, xgb_params=light_params)
             result = ablated.fit(data, feature_cols)
             return abs(result.get("tau_mean", 0)) if result.get("status") == "success" else 0
         elif ablation_key == "B3_temporal_cv":
-            ablated = ACML(n_splits=2)
+            ablated = ACML(n_splits=2, xgb_params=light_params)
             result = ablated.fit(data, feature_cols)
             return abs(result.get("tau_mean", 0)) if result.get("status") == "success" else 0
         return 0
 
     def _ablate_ccp(self, data, feature_cols, acml_model, ablation_key):
+        light_params = self.ABLATION_CCP_XGB_PARAMS
         if ablation_key == "C1_causal_residual":
-            model = CCP()
+            model = CCP(n_windows=4, xgb_params=light_params)
             result = model.fit(data, feature_cols, acml_model=None)
             return result.get("avg_coverage", 0)
         elif ablation_key == "C2_adaptive_coverage":
-            model = CCP(gamma=0.0)
+            model = CCP(gamma=0.0, n_windows=4, xgb_params=light_params)
             result = model.fit(data, feature_cols, acml_model=acml_model)
             return result.get("avg_coverage", 0)
         elif ablation_key == "C3_distribution_shift":
-            model = CCP(n_windows=2)
+            model = CCP(n_windows=2, xgb_params=light_params)
             result = model.fit(data, feature_cols, acml_model=acml_model)
             return result.get("avg_coverage", 0)
         return 0
