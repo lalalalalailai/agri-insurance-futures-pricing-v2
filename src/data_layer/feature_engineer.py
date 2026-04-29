@@ -7,7 +7,8 @@ class FeatureEngineer:
 
     MACRO_INDICATORS = [
         "cpi", "ppi", "m2", "gdp", "pmi",
-        "import_value", "export_value", "retail_sales",
+        "import_value", "export_value", "trade_balance",
+        "retail_sales",
         "fixed_investment", "industrial_output",
         "exchange_rate", "interest_rate",
         "fiscal_revenue", "fiscal_expenditure",
@@ -73,6 +74,7 @@ class FeatureEngineer:
             "pmi": "macro_pmi",
             "import_value": "macro_import_value",
             "export_value": "macro_export_value",
+            "trade_balance": "macro_trade_balance",
             "retail_sales": "macro_retail_sales",
             "fixed_investment": "macro_fixed_investment",
             "industrial_output": "macro_industrial_output",
@@ -137,7 +139,8 @@ class FeatureEngineer:
             "surface_pressure", "solar_radiation",
             "ndvi", "evi", "lst", "drought_index",
             "cpi", "ppi", "m2", "gdp", "pmi",
-            "import_value", "export_value", "retail_sales",
+            "import_value", "export_value", "trade_balance",
+            "retail_sales",
             "fixed_investment", "industrial_output",
             "exchange_rate", "interest_rate",
         ]
@@ -149,7 +152,8 @@ class FeatureEngineer:
                         "surface_pressure", "solar_radiation"],
             "remote_sensing": ["ndvi", "evi", "lst", "drought_index"],
             "macro": ["cpi", "ppi", "m2", "gdp", "pmi",
-                      "import_value", "export_value", "retail_sales",
+                      "import_value", "export_value", "trade_balance",
+                      "retail_sales",
                       "fixed_investment", "industrial_output",
                       "exchange_rate", "interest_rate"],
         }

@@ -49,6 +49,8 @@ AGRI_VARIETIES = [
     "M0", "OI0", "P0", "PK0", "RM0", "RU0", "SR0", "SP0", "Y0",
 ]
 
+IMPORT_DEPENDENT_VARIETIES = ["A0", "C0", "CF0", "OI0", "P0", "SR0"]
+
 INDUSTRIAL_VARIETIES = [
     "EB0", "EG0", "FG0", "HC0", "I0", "J0", "JM0", "L0",
     "MA0", "PG0", "PP0", "SA0", "SF0", "SM0", "SS0", "TA0",
@@ -94,7 +96,8 @@ FEATURE_NAMES = [
     "surface_pressure", "solar_radiation",
     "ndvi", "evi", "lst", "drought_index",
     "cpi", "ppi", "m2", "gdp", "pmi",
-    "import_value", "export_value", "retail_sales",
+    "import_value", "export_value", "trade_balance",
+    "retail_sales",
     "fixed_investment", "industrial_output",
     "exchange_rate", "interest_rate",
 ]
