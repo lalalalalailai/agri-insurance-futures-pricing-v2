@@ -50,15 +50,16 @@ def render():
 
                 trad = TraditionalActuary()
                 trad.fit(train)
+                mean_price = float(train["close"].mean())
+                trad_result = trad.predict_premium(mean_price)
+                trad_rate = trad_result["premium_rate"]
+                trad_y = Y_test * (1 + trad_rate)
 
                 results = []
                 results.append({"模型": "ACML(本模型)", "MAPE": round(compute_mape(Y_test, acml_y), 4),
                                 "RMSE": round(compute_rmse(Y_test, acml_y), 2)})
                 results.append({"模型": "XGBoost", "MAPE": round(compute_mape(Y_test, xgb_y), 4),
                                 "RMSE": round(compute_rmse(Y_test, xgb_y), 2)})
-
-                trad_pred = trad.predict(len(Y_test))
-                trad_y = np.full(len(Y_test), trad_pred)
                 results.append({"模型": "传统精算", "MAPE": round(compute_mape(Y_test, trad_y), 4),
                                 "RMSE": round(compute_rmse(Y_test, trad_y), 2)})
 
