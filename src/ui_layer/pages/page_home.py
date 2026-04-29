@@ -19,7 +19,7 @@ def render():
     st.markdown("---")
 
     st.markdown("### 系统架构")
-    st.markdown("""<div class="info-card"><h4>四层松耦合架构</h4><p><b>数据层</b>: 36品种期货 + 7省气象 + 遥感 + 宏观经济 = 54,432条真实数据(2020.01-2025.12)</p><p><b>模型层</b>: Agri-PC因果发现 + ACML因果定价 + CCP保形预测</p><p><b>服务层</b>: 三级缓存(8x加速) + 容错降级 + 工厂模式</p><p><b>展示层</b>: 金融绿色主题 + 16功能模块 + 交互式可视化</p></div>""", unsafe_allow_html=True)
+    st.markdown("""<div class="info-card"><h4>四层松耦合架构</h4><p><b>数据层</b>: 36品种期货 + 7省气象 + 遥感 + 宏观经济 + 进出口贸易 = 77,297条真实数据(2020.01-2025.12)</p><p><b>模型层</b>: Agri-PC因果发现 + ACML因果定价 + CCP保形预测</p><p><b>服务层</b>: 三级缓存(8x加速) + 容错降级 + 工厂模式</p><p><b>展示层</b>: 金融绿色主题 + 16功能模块 + 交互式可视化</p></div>""", unsafe_allow_html=True)
 
     st.markdown("### 快速操作")
     c1, c2, c3 = st.columns(3)

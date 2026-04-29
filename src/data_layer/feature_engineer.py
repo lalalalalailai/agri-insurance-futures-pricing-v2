@@ -157,7 +157,7 @@ class FeatureEngineer:
 
     def get_data_source_summary(self) -> dict:
         return {
-            "futures": {"count": 36, "records": 54432, "source": "大商所/郑商所/上期所"},
+            "futures": {"count": 36, "records": 50993, "source": "大商所/郑商所/上期所"},
             "weather": {"count": 7, "indicators": 6, "source": "中国气象局"},
             "remote_sensing": {"count": 7, "indicators": 4, "source": "NASA MODIS/NOAA"},
             "macro": {"count": 14, "records": self.MACRO_RECORDS, "source": "国家统计局"},

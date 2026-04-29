@@ -27,7 +27,7 @@ with st.sidebar:
     <div style="font-size:13px; color:#CBD5E1;">
     基于因果推断的农险期货智能定价模型<br>
     Agri-PC / ACML / CCP 三大原创算法<br>
-    54,432条真实多源数据(2020.01-2025.12)
+    77,297条真实多源数据(2020.01-2025.12)
     </div>
     """, unsafe_allow_html=True)
 
